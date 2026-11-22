@@ -45,6 +45,8 @@ def build_vectorstore(chunks: list[Document]) -> Chroma:
         collection_name=COLLECTION_NAME,
         embedding_function=embeddings,
         persist_directory=str(CHROMA_DIR),
+        # Kosinus statt Chroma-Standard (L2): passt zu e5 und liefert Scores in [0, 2].
+        collection_metadata={"hnsw:space": "cosine"},
     )
     store.add_documents(chunks)
     return store
