@@ -7,12 +7,12 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 DATA_DIR = Path(__file__).parent / "data"
 
 # Chunking-Parameter: groß genug für zusammenhängenden Kontext, klein genug
-# für präzise Treffer. Der Overlap verhindert, dass Sätze an Grenzen zerrissen
+# für präzise Treffer. Overlap verhindert, dass Sätze an Grenzen zerrissen
 # werden und Information verloren geht.
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 150
 
-# Zuordnung Dateiendung -> Loader. Neue Formate lassen sich hier ergänzen.
+# Zuordnung Dateiendung -> Loader.
 LOADERS = {
     ".pdf": PyPDFLoader,
     ".docx": Docx2txtLoader,
@@ -44,9 +44,9 @@ def split_documents(
 ) -> list[Document]:
     """Teilt Dokumente in überlappende Chunks.
 
-    Der Splitter trennt bevorzugt an Absätzen, dann an Zeilen, Sätzen und
+    Splitter trennt bevorzugt an Absätzen, dann an Zeilen, Sätzen und
     Wörtern, damit Chunks möglichst an natürlichen Grenzen enden.
-    Die Metadaten (Quelle, Seite) bleiben pro Chunk erhalten.
+    Metadaten bleiben pro Chunk erhalten.
     """
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
